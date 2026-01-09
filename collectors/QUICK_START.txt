@@ -1,0 +1,180 @@
+================================================================================
+JFS SIEM AGENT - QUICK START GUIDE
+================================================================================
+
+WHAT YOU NEED:
+- JFS_SIEM_Agent.exe (11.1 MB)
+- Target PC with Windows
+- Administrator access
+
+================================================================================
+INSTALLATION (3 STEPS - 2 MINUTES)
+================================================================================
+
+STEP 1: Copy EXE
+  Source: d:\xamp\htdocs\SIEM\collectors-fixed\dist\JFS_SIEM_Agent.exe
+  Target: Any folder on remote PC (e.g., C:\Program Files\)
+
+STEP 2: Double-click EXE
+  - GUI window opens
+  - Shows 4 buttons
+
+STEP 3: Click "Install Service"
+  - Service installs as Windows Service
+  - Automatic startup enabled
+  - Runs as LocalSystem account
+
+STEP 4: Click "Start Service"
+  - Service starts immediately
+  - Begins collecting events
+  - Runs 24/7 in background
+
+================================================================================
+VERIFY INSTALLATION
+================================================================================
+
+Open Command Prompt and run:
+  sc query JFSSIEMAgent
+
+Expected result:
+  STATE: 4 RUNNING
+
+Or use PowerShell:
+  Get-Service JFSSIEMAgent
+
+Expected result:
+  Status   Name
+  ------   ----
+  Running  JFSSIEMAgent
+
+================================================================================
+CONFIGURATION
+================================================================================
+
+DEFAULT SETTINGS (No changes needed):
+  - Collector IP: 192.168.1.100
+  - Collector Port: 9999
+  - Event Logs: System, Application, Security
+  - Startup: Automatic
+  - Account: LocalSystem
+
+CUSTOM COLLECTOR IP:
+  1. Edit: jfs_agent_service.py (line 52)
+  2. Change: self.server_ip = "YOUR_IP"
+  3. Rebuild EXE using build_agent_exe.py script
+
+================================================================================
+SERVICE MANAGEMENT
+================================================================================
+
+START SERVICE:
+  net start JFSSIEMAgent
+
+STOP SERVICE:
+  net stop JFSSIEMAgent
+
+REMOVE SERVICE:
+  sc delete JFSSIEMAgent
+
+CHECK STATUS:
+  Get-Service JFSSIEMAgent
+
+VIEW LOGS:
+  %APPDATA%\JFS_SIEM_Agent\logs\jfs_agent_service.log
+
+================================================================================
+WHAT HAPPENS NEXT
+================================================================================
+
+IMMEDIATELY:
+  ✓ Service starts collecting Windows events
+  ✓ Connects to collector at 192.168.1.100:9999
+  ✓ Sends events every 10 seconds
+  ✓ Logs all activity
+
+AFTER YOU CLOSE EXE:
+  ✓ Service continues running
+  ✓ Connection stays open
+  ✓ Events keep arriving
+  ✓ Auto-restarts if it crashes
+
+AFTER REBOOT:
+  ✓ Service auto-starts
+  ✓ Reconnects to collector
+  ✓ Resumes event collection
+  ✓ No manual intervention needed
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+SERVICE WON'T INSTALL:
+  - Run Command Prompt as Administrator
+  - Navigate to EXE folder
+  - Run: JFS_SIEM_Agent.exe install
+
+SERVICE WON'T START:
+  - Check collector is running
+  - Check firewall allows port 9999
+  - Check Event Viewer for errors
+
+NO EVENTS ARRIVING:
+  - Verify collector IP is correct
+  - Test: ping 192.168.1.100
+  - Check Security event log has events
+  - Verify admin rights
+
+SERVICE KEEPS STOPPING:
+  - Check logs: %APPDATA%\JFS_SIEM_Agent\logs\
+  - Verify network connectivity
+  - Check collector is still running
+
+================================================================================
+IMPORTANT NOTES
+================================================================================
+
+1. SERVICE RUNS AS LOCALYSTEM
+   - Runs even if user logs out
+   - Continues after reboot
+   - No user login required
+
+2. AUTO-RESTART ENABLED
+   - If service crashes, it auto-restarts
+   - Checks every 10 seconds
+   - Logs all restart attempts
+
+3. PERSISTENT CONNECTION
+   - Socket stays open between collections
+   - Reconnects automatically if disconnected
+   - No data loss on connection issues
+
+4. SECURITY EVENTS
+   - Requires admin rights to read Security log
+   - Run EXE as Administrator for full functionality
+   - Some events may be missed without admin rights
+
+5. LOGS LOCATION
+   - %APPDATA%\JFS_SIEM_Agent\logs\jfs_agent_service.log
+   - Useful for troubleshooting
+   - Check if service won't start
+
+================================================================================
+SUPPORT
+================================================================================
+
+For detailed configuration: See AGENT_CONFIGURATION_GUIDE.md
+For issues: Check logs in %APPDATA%\JFS_SIEM_Agent\logs\
+For help: Review Event Viewer under Windows Logs > System
+
+Service Name: JFSSIEMAgent
+Default Collector: 192.168.1.100:9999
+Default Port: 9999
+
+================================================================================
+READY TO DEPLOY!
+================================================================================
+
+Just copy the EXE and follow the 4 steps above.
+Service will run 24/7 with no additional configuration needed!
+
+Questions? Check AGENT_CONFIGURATION_GUIDE.md for detailed instructions.

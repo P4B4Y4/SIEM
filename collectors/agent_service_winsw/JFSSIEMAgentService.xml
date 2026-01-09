@@ -1,0 +1,13 @@
+<service>
+  <id>JFSSIEMAgent</id>
+  <name>JFSSIEMAgent</name>
+  <description>JFS SIEM Agent (WinSW wrapper)</description>
+  <executable>%BASE%\JFS_SIEM_Agent_Enhanced_ServiceFix.exe</executable>
+  <arguments>--run-service</arguments>
+  <logpath>%BASE%\logs</logpath>
+  <log mode="roll-by-size">
+    <sizeThreshold>10240</sizeThreshold>
+    <keepFiles>5</keepFiles>
+  </log>
+  <onfailure action="restart" delay="5 sec" />
+</service>

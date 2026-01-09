@@ -1,0 +1,13 @@
+<service>
+  <id>SIEMEsetSyslog</id>
+  <name>SIEM ESET Syslog Listener</name>
+  <description>Receives ESET syslog over UDP 6514 and stores events</description>
+  <executable>D:\xamp\php\php.exe</executable>
+  <arguments>-f &quot;D:\xamp\htdocs\SIEM\eset-syslog-listener.php&quot;</arguments>
+  <logpath>D:\xamp\htdocs\SIEM\services_build\SIEMEsetSyslog\logs</logpath>
+  <log mode="roll-by-size">
+    <sizeThreshold>10240</sizeThreshold>
+    <keepFiles>5</keepFiles>
+  </log>
+  <onfailure action="restart" delay="5 sec" />
+</service>

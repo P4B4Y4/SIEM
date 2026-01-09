@@ -1,0 +1,13 @@
+<service>
+  <id>SIEMFortinetSyslog</id>
+  <name>SIEM Fortinet Syslog Listener</name>
+  <description>Receives Fortinet syslog over UDP 514 and stores events</description>
+  <executable>D:\xamp\php\php.exe</executable>
+  <arguments>-f &quot;D:\xamp\htdocs\SIEM\syslog-listener.php&quot;</arguments>
+  <logpath>D:\xamp\htdocs\SIEM\services_build\SIEMFortinetSyslog\logs</logpath>
+  <log mode="roll-by-size">
+    <sizeThreshold>10240</sizeThreshold>
+    <keepFiles>5</keepFiles>
+  </log>
+  <onfailure action="restart" delay="5 sec" />
+</service>

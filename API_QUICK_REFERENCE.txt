@@ -1,0 +1,281 @@
+================================================================================
+JFS SIEM - API QUICK REFERENCE
+================================================================================
+
+CONFIGURATION COMPLETE - December 9, 2025
+
+================================================================================
+CONFIGURATION FILES
+================================================================================
+
+1. config/config.php
+   - Main PHP configuration with all constants
+   - Database, ESET, Fortinet, SMTP, Security settings
+   - Dashboard, API, Backup, Compliance settings
+
+2. config/settings.json
+   - Runtime configuration in JSON format
+   - Can be updated via API without code changes
+   - Stores: Database, ESET, Fortinet, SMTP, Threat Intel, Security, Backup
+
+================================================================================
+API ENDPOINTS
+================================================================================
+
+Base URL: http://localhost/SIEM/api/
+
+1. Settings API (settings.php)
+   GET    /api/settings.php                          - Get all settings
+   GET    /api/settings.php?category=fortinet        - Get category
+   POST   /api/settings.php?category=fortinet        - Update settings
+   DELETE /api/settings.php?category=fortinet&key=ip - Delete setting
+   PATCH  /api/settings.php?action=test_database     - Test connection
+
+2. Events API (events.php)
+   GET    /api/events.php                            - Get all events
+   GET    /api/events.php?filter=fortinet            - Filter by source
+   GET    /api/events.php?severity=critical          - Filter by severity
+
+3. Threat Detection API (threat-detection.php)
+   POST   /api/threat-detection.php?action=evaluate  - Evaluate logs
+   GET    /api/threat-detection.php?action=get_alerts - Get alerts
+   GET    /api/threat-detection.php?action=get_stats - Get statistics
+
+4. Log Analyzer API (log-analyzer.php)
+   POST   /api/log-analyzer.php?action=analyze       - Analyze logs
+   GET    /api/log-analyzer.php?action=get_summary   - Get summary
+
+5. Agent Collector API (agent-collector.php)
+   POST   /api/agent-collector.php?action=collect    - Trigger collection
+   GET    /api/agent-collector.php?action=status     - Get agent status
+
+6. Alerting System API (alerting-system.php)
+   POST   /api/alerting-system.php?action=create     - Create alert
+   GET    /api/alerting-system.php?action=list       - List alerts
+
+7. Remote Access API (remote-access.php)
+   POST   /api/remote-access.php?action=execute      - Execute command
+   GET    /api/remote-access.php?action=get_results  - Get results
+
+8. Email Alert API (send-alert-email.php)
+   POST   /api/send-alert-email.php                  - Send alert email
+
+================================================================================
+CURRENT CONFIGURATION
+================================================================================
+
+ORGANIZATION:
+  Name: JFS ICT Services (PVT) LTD
+  Domain: jfsholdings.com
+  Compliance: ISO 27001:2013
+
+DATABASE:
+  Host: localhost
+  Name: jfs_siem
+  User: root
+  Password: (empty - set your password)
+  Port: 3306
+
+FORTINET:
+  Enabled: Yes
+  IP: 192.168.1.99
+  API Key: hQx5kfknbm8z6h831HhrzG5Hrf4Hrc
+  Syslog Port: 514
+  Log Method: syslog
+
+ESET:
+  Enabled: Yes
+  Server: us02.protect.eset.com (Cloud)
+  Syslog Port: 6514
+
+SMTP:
+  Host: smtp.office365.com
+  Port: 587
+  Username: security.ict@jfsholdings.com
+  Encryption: TLS
+
+SECURITY:
+  Session Timeout: 1800 seconds (30 minutes)
+  Max Login Attempts: 3
+  Password Min Length: 12 characters
+  2FA Enabled: No
+
+API:
+  Enabled: Yes
+  Rate Limit: 100 requests/minute
+  Webhook: Enabled
+
+DASHBOARD:
+  Refresh Interval: 30 seconds
+  Max Events: 50
+  Theme: Professional
+
+================================================================================
+QUICK SETUP STEPS
+================================================================================
+
+1. Update Database Password
+   Edit: config/config.php
+   Find: define('DB_PASS', '');
+   Change to: define('DB_PASS', 'your_password');
+
+2. Update SMTP Password
+   Edit: config/config.php
+   Find: define('SMTP_PASSWORD', '');
+   Change to: define('SMTP_PASSWORD', 'your_password');
+
+3. Set Webhook Secret
+   Edit: config/config.php
+   Find: define('WEBHOOK_SECRET', '');
+   Change to: define('WEBHOOK_SECRET', 'your_strong_secret_key');
+
+4. Add Threat Intelligence Keys (Optional)
+   Edit: config/config.php
+   - VIRUSTOTAL_API_KEY
+   - ABUSEIPDB_API_KEY
+   - ALIENVAULT_API_KEY
+
+5. Test Database Connection
+   curl -X PATCH "http://localhost/SIEM/api/settings.php?action=test_database" \
+     -H "Content-Type: application/json" \
+     -d '{"host":"localhost","user":"root","pass":"","name":"jfs_siem"}' \
+     -b "PHPSESSID=your_session_id"
+
+================================================================================
+AUTHENTICATION
+================================================================================
+
+All endpoints require admin login via session.
+
+1. Login to SIEM
+   http://localhost/SIEM/pages/login.php
+
+2. Get Session ID
+   PHPSESSID cookie is automatically set
+
+3. Use in API Calls
+   curl -X GET "http://localhost/SIEM/api/settings.php" \
+     -b "PHPSESSID=your_session_id"
+
+================================================================================
+COMMON CURL EXAMPLES
+================================================================================
+
+1. Get Fortinet Settings
+   curl -X GET "http://localhost/SIEM/api/settings.php?category=fortinet" \
+     -b "PHPSESSID=your_session_id"
+
+2. Update Fortinet IP
+   curl -X POST "http://localhost/SIEM/api/settings.php?category=fortinet&key=ip" \
+     -H "Content-Type: application/json" \
+     -d '{"value":"192.168.1.100"}' \
+     -b "PHPSESSID=your_session_id"
+
+3. Get All Events
+   curl -X GET "http://localhost/SIEM/api/events.php" \
+     -b "PHPSESSID=your_session_id"
+
+4. Get Critical Alerts
+   curl -X GET "http://localhost/SIEM/api/threat-detection.php?action=get_alerts&severity=critical" \
+     -b "PHPSESSID=your_session_id"
+
+5. Test Database Connection
+   curl -X PATCH "http://localhost/SIEM/api/settings.php?action=test_database" \
+     -H "Content-Type: application/json" \
+     -d '{"host":"localhost","user":"root","pass":"","name":"jfs_siem"}' \
+     -b "PHPSESSID=your_session_id"
+
+================================================================================
+RESPONSE FORMAT
+================================================================================
+
+Success Response:
+{
+  "success": true,
+  "message": "Operation successful",
+  "data": {
+    "key": "value"
+  }
+}
+
+Error Response:
+{
+  "success": false,
+  "error": "Error message",
+  "code": 400
+}
+
+================================================================================
+SECURITY CHECKLIST
+================================================================================
+
+[ ] Set database password in config.php
+[ ] Set SMTP password in config.php
+[ ] Set webhook secret in config.php
+[ ] Enable HTTPS in production (set session.cookie_secure to 1)
+[ ] Configure CORS headers if needed
+[ ] Add threat intelligence API keys
+[ ] Test database connection
+[ ] Test SMTP connection
+[ ] Verify Fortinet connectivity
+[ ] Verify ESET connectivity
+[ ] Review audit logs regularly
+[ ] Monitor API rate limits
+[ ] Backup configuration files
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+403 Forbidden
+  - Check if logged in with admin role
+  - Verify PHPSESSID cookie is valid
+  - Check session timeout settings
+
+400 Bad Request
+  - Verify required parameters are provided
+  - Check JSON syntax in request body
+  - Ensure Content-Type: application/json header
+
+500 Server Error
+  - Check PHP error logs in logs/ directory
+  - Verify database connection
+  - Check file permissions on config files
+
+Connection Refused
+  - Verify MySQL is running
+  - Check database host and port
+  - Verify firewall rules
+
+================================================================================
+DOCUMENTATION
+================================================================================
+
+Full Documentation:
+  - API_CONFIGURATION.md - Complete API guide
+  - THREAT_DETECTION_GUIDE.md - Threat detection rules
+  - LOG_ANALYZER_GUIDE.md - Log analysis features
+  - ALERTING_SYSTEM_GUIDE.md - Alert management
+
+Quick Guides:
+  - THREAT_DETECTION_QUICKSTART.md
+  - QUICK_ACCESS_GUIDE.txt
+
+================================================================================
+STATUS
+================================================================================
+
+✅ API Configuration Complete
+✅ All endpoints configured
+✅ Database connected
+✅ Fortinet integration ready
+✅ ESET integration ready
+✅ Threat detection enabled
+✅ Email alerts configured
+✅ Security settings applied
+
+Last Updated: December 9, 2025
+Version: 1.0.0
+Location: d:\xamp\htdocs\SIEM\
+
+================================================================================

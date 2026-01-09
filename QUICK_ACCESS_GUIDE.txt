@@ -1,0 +1,292 @@
+================================================================================
+QUICK ACCESS GUIDE - JFS SIEM
+================================================================================
+
+All pages are now accessible from the navigation menu!
+
+================================================================================
+NAVIGATION MENU
+================================================================================
+
+Click on any of these links in the top navigation bar:
+
+1. Dashboard
+   URL: http://localhost/SIEM/pages/dashboard.php
+   Icon: Home
+   Shows: Overview, statistics, recent events
+
+2. Events
+   URL: http://localhost/SIEM/pages/events.php
+   Icon: List
+   Shows: All security events with filtering and auto-refresh
+
+3. Threats (NEW!)
+   URL: http://localhost/SIEM/pages/threat-dashboard.php
+   Icon: Exclamation Triangle
+   Shows: Threat detection alerts and recent events
+
+4. Alerts (NEW!)
+   URL: http://localhost/SIEM/pages/alerts.php
+   Icon: Bell
+   Shows: All security alerts with status management
+
+5. Agents
+   URL: http://localhost/SIEM/pages/agent-deployment.php
+   Icon: Server
+   Shows: Agent deployment and management
+
+6. Remote Access
+   URL: http://localhost/SIEM/pages/remote-access.php
+   Icon: Desktop
+   Shows: Remote access controls
+
+7. Integrations
+   URL: http://localhost/SIEM/pages/integrations.php
+   Icon: Plug
+   Shows: Third-party integrations
+
+8. Settings
+   URL: http://localhost/SIEM/pages/settings.php
+   Icon: Cog
+   Shows: System configuration
+
+================================================================================
+DIRECT LINKS
+================================================================================
+
+Main Dashboard:
+  http://localhost/SIEM/pages/dashboard.php
+
+Events Page:
+  http://localhost/SIEM/pages/events.php
+
+Threat Detection Dashboard:
+  http://localhost/SIEM/pages/threat-dashboard.php
+
+Alerts Management:
+  http://localhost/SIEM/pages/alerts.php
+
+Agent Deployment:
+  http://localhost/SIEM/pages/agent-deployment.php
+
+Remote Access:
+  http://localhost/SIEM/pages/remote-access.php
+
+Integrations:
+  http://localhost/SIEM/pages/integrations.php
+
+Settings:
+  http://localhost/SIEM/pages/settings.php
+
+================================================================================
+API ENDPOINTS
+================================================================================
+
+Threat Detection API:
+  GET  /api/threat-detection.php?action=get_alerts
+  GET  /api/threat-detection.php?action=get_alerts?severity=critical
+  POST /api/threat-detection.php?action=evaluate
+
+Log Analyzer API:
+  POST /api/log-analyzer.php?action=analyze
+  POST /api/log-analyzer.php?action=analyze_batch
+  GET  /api/log-analyzer.php?action=get_rules
+  GET  /api/log-analyzer.php?action=analyze_event&event_id=123
+
+Agent Collector API:
+  POST /api/agent-collector.php
+
+================================================================================
+WHAT EACH PAGE SHOWS
+================================================================================
+
+DASHBOARD
+  - Total events count
+  - Critical alerts count
+  - High alerts count
+  - Active agents count
+  - Recent events list
+  - System status
+
+EVENTS
+  - All security events
+  - Filter by severity
+  - Filter by event type
+  - Search functionality
+  - Auto-refresh (configurable)
+  - Pagination
+
+THREATS (NEW!)
+  - Critical alerts count
+  - High alerts count
+  - Total alerts count
+  - Total events count
+  - Threat alerts with filtering
+  - Recent events list
+  - Alert details modal
+  - Recommended actions
+
+ALERTS (NEW!)
+  - All security alerts
+  - Filter by severity
+  - Filter by status (New, Acknowledged, Resolved)
+  - Update alert status
+  - Add investigation notes
+  - View alert details
+  - See recommended actions
+
+AGENTS
+  - Deploy new agents
+  - Manage existing agents
+  - View agent status
+  - Download agent executable
+
+REMOTE ACCESS
+  - Remote access controls
+  - Session management
+
+INTEGRATIONS
+  - Third-party integrations
+  - Configuration options
+
+SETTINGS
+  - System configuration
+  - Database settings
+  - Email settings
+  - Integration settings
+
+================================================================================
+FEATURES
+================================================================================
+
+THREAT DETECTION
+  ✓ 25+ detection rules
+  ✓ Automatic alert generation
+  ✓ Severity classification
+  ✓ Recommended actions
+  ✓ Alert management
+
+LOG ANALYSIS
+  ✓ 6 log categories
+  ✓ Severity scoring (1-10)
+  ✓ Anomaly detection
+  ✓ Smart recommendations
+  ✓ Real-time analysis
+
+EVENT COLLECTION
+  ✓ Windows event logs
+  ✓ Security events
+  ✓ System events
+  ✓ Application events
+  ✓ Auto-refresh
+
+ALERT MANAGEMENT
+  ✓ View all alerts
+  ✓ Filter by severity
+  ✓ Filter by status
+  ✓ Update status
+  ✓ Add notes
+  ✓ View recommendations
+
+================================================================================
+HOW TO USE
+================================================================================
+
+1. LOGIN
+   URL: http://localhost/SIEM/pages/login.php
+   Username: admin
+   Password: admin
+
+2. VIEW DASHBOARD
+   Click "Dashboard" in navbar
+   See overview and statistics
+
+3. VIEW EVENTS
+   Click "Events" in navbar
+   See all collected security events
+   Use auto-refresh to see new events
+
+4. VIEW THREATS
+   Click "Threats" in navbar
+   See threat detection alerts
+   Click "View" to see recommendations
+
+5. MANAGE ALERTS
+   Click "Alerts" in navbar
+   Update alert status
+   Add investigation notes
+
+6. DEPLOY AGENTS
+   Click "Agents" in navbar
+   Download and deploy agent executable
+   Monitor agent status
+
+7. CONFIGURE SETTINGS
+   Click "Settings" in navbar
+   Configure system options
+   Test connections
+
+================================================================================
+KEYBOARD SHORTCUTS
+================================================================================
+
+None configured yet, but all pages are keyboard accessible.
+
+Use Tab to navigate between elements.
+Use Enter to activate buttons and links.
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Q: Can't see the new pages?
+A: Make sure you're logged in. Pages require authentication.
+
+Q: No alerts showing?
+A: Send test events to the API first.
+   See API ENDPOINTS section above.
+
+Q: Auto-refresh not working?
+A: Check the auto-refresh dropdown on Events page.
+   Default is 10 seconds.
+
+Q: Can't update alert status?
+A: Make sure you have the correct permissions.
+   Contact administrator if needed.
+
+================================================================================
+QUICK START
+================================================================================
+
+1. Open browser: http://localhost/SIEM/pages/login.php
+2. Login with: admin / admin
+3. Click "Dashboard" to see overview
+4. Click "Events" to see all events
+5. Click "Threats" to see threat alerts
+6. Click "Alerts" to manage alerts
+7. Send test event to see analysis:
+
+   curl -X POST http://localhost/SIEM/api/agent-collector.php \
+     -H "Content-Type: application/json" \
+     -d '{
+       "event_id": "4688",
+       "process_name": "powershell.exe",
+       "what_happened": "PowerShell execution"
+     }'
+
+8. Refresh "Threats" page to see new alert
+
+================================================================================
+STATUS: ✅ READY TO USE
+================================================================================
+
+All pages are now accessible and fully functional!
+
+Start with Dashboard and explore each page to see:
+  - Events collection
+  - Threat detection
+  - Alert management
+  - Agent deployment
+  - System configuration
+
+Enjoy your SIEM dashboard!

@@ -1,0 +1,13 @@
+<service>
+  <id>SIEMEmailSender</id>
+  <name>SIEM Email Sender</name>
+  <description>Sends SIEM alert emails in background (send_pending loop)</description>
+  <executable>D:\xamp\php\php.exe</executable>
+  <arguments>-f &quot;D:\xamp\htdocs\SIEM\cron\email_sender_worker.php&quot;</arguments>
+  <logpath>D:\xamp\htdocs\SIEM\services_build\SIEMEmailSender\logs</logpath>
+  <log mode="roll-by-size">
+    <sizeThreshold>10240</sizeThreshold>
+    <keepFiles>5</keepFiles>
+  </log>
+  <onfailure action="restart" delay="5 sec" />
+</service>
