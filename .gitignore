@@ -1,0 +1,47 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*.tmp
+*.bak
+.vscode/
+.idea/
+
+# PHP / Composer
+/vendor/
+composer.phar
+
+# Logs
+/logs/
+/jfs-siem/logs/
+/dist/logs/
+*.log
+*.lock
+
+# Local data / databases
+/data/*.db
+/data/*.sqlite
+/data/*.sqlite3
+/data/noise_state/
+
+# Local configuration files (do not commit secrets)
+/config/database.ini
+/config/email_settings.json
+/config/settings.json
+/config/config.php
+/collectors/config/database.ini
+
+# Python / build artifacts
+__pycache__/
+*.pyc
+/build/
+/dist/
+/collectors/build/
+/collectors/dist/
+*.spec
+
+# Windows binaries
+*.exe
+*.msi
